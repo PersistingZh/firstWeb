@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="panel panel-default operation" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
+                             <input name="id" hidden/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文件路径</label>
+                    <div class="layui-input-block">
+                        <input type="filePath" name="filePath" placeholder="请输入文件路径" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关联id</label>
+                    <div class="layui-input-block">
+                        <input type="glId" name="glId" placeholder="请输入关联id" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <input type="ms" name="ms" placeholder="请输入描述" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <input type="createDate" name="createDate" placeholder="请输入创建时间" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">更新时间</label>
+                    <div class="layui-input-block">
+                        <input type="updateDate" name="updateDate" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否为首页展示图片0不是首页展示1是首页展示</label>
+                    <div class="layui-input-block">
+                        <input type="isSy" name="isSy" placeholder="请输入是否为首页展示图片0不是首页展示1是首页展示" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <input type="type" name="type" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上传文件名</label>
+                    <div class="layui-input-block">
+                        <input type="fileName" name="fileName" placeholder="请输入上传文件名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table_div">
+    <div id="searchParam"  shiro:hasPermission="sysFileFjxx:list">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" id="key" class="layui-input"  autocomplete="off" placeholder="请输入">
+            </div>
+            <div class="layui-input-inline ">
+                <button class="layui-btn"   id="search">查询</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="sysFileFjxx:add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="sysFileFjxx:delete">删除</button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sysFileFjxx:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sysFileFjxx:delete">删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script>
+    var layer = layui.layer;
+    var table = layui.table;
+    var form = layui.form;
+    var $ = jQuery = layui.jquery;
+
+    //渲染table
+    table.render({
+        elem: '#showTable'
+        , page: true //开启分页
+        , url: '/sysFileFjxx/listByPage' //数据接口
+        , method: "POST"
+        , contentType: 'application/json;charset=utf8'
+        , headers: {'authorization': CoreUtil.getData("access_token")}
+        , parseData: function (res) { //res 即为原始返回的数据
+            return {
+                "code": res.code, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.data.total, //解析数据长度
+                "data": res.data.records //解析数据列表
+            };
+        }
+        , cols: [
+            [ //表头
+                {type: 'checkbox', fixed: 'left'},
+                {type: 'numbers', fixed: 'left',title:"序号"},
+                {width: 300, toolbar: "#tool", title: '操作'},
+                    {field: 'id', title: '', width: 300, sort: true},
+                    {field: 'filePath', title: '文件路径', width: 300, sort: true},
+                    {field: 'glId', title: '关联id', width: 300, sort: true},
+                    {field: 'ms', title: '描述', width: 300, sort: true},
+                    {field: 'createDate', title: '创建时间', width: 300, sort: true},
+                    {field: 'updateDate', title: '更新时间', width: 300, sort: true},
+                    {field: 'isSy', title: '是否为首页展示图片0不是首页展示1是首页展示', width: 300, sort: true},
+                    {field: 'type', title: '', width: 300, sort: true},
+                    {field: 'fileName', title: '上传文件名', width: 300, sort: true},
+            ]
+        ]
+        , toolbar: '#toolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        , id: 'tableId' //reload用
+    });
+
+    //刷新table
+    var reloadTable = function () {
+        var key = $('#key').val();
+        //执行重载
+        table.reload('tableId', {
+            where: {
+                "key": key
+            }
+        }, 'data');
+    }
+    //搜索
+    $('#search').click(function () {
+        reloadTable();
+    })
+
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event){
+            case 'batchDeleted':
+                var checkStatus = table.checkStatus(obj.config.id);
+                var data = checkStatus.data;
+                if(data.length==0){
+                    layer.msg("请选择要批量删除的列");
+                }else {
+                    var ids = [];
+                    $(data).each(function (index,item) {
+                        ids.push(item.id);
+                    });
+                    tipDialog(ids);
+                }
+                break;
+            case 'add':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("新增");
+                $(".operation input[name=id]").val("");
+                $(".operation input[name=filePath]").val("");
+                $(".operation input[name=glId]").val("");
+                $(".operation input[name=ms]").val("");
+                $(".operation input[name=createDate]").val("");
+                $(".operation input[name=updateDate]").val("");
+                $(".operation input[name=isSy]").val("");
+                $(".operation input[name=type]").val("");
+                $(".operation input[name=fileName]").val("");
+                break;
+        };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+        var data = obj.data;
+        switch (obj.event) {
+            case 'del':
+                var ids=[];
+                ids.push(data.id);
+                tipDialog(ids);
+                break;
+            case 'edit':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("编辑");
+                    $(".operation input[name=id]").val(data.id);
+                    $(".operation input[name=filePath]").val(data.filePath);
+                    $(".operation input[name=glId]").val(data.glId);
+                    $(".operation input[name=ms]").val(data.ms);
+                    $(".operation input[name=createDate]").val(data.createDate);
+                    $(".operation input[name=updateDate]").val(data.updateDate);
+                    $(".operation input[name=isSy]").val(data.isSy);
+                    $(".operation input[name=type]").val(data.type);
+                    $(".operation input[name=fileName]").val(data.fileName);
+                break;
+        }
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+        layer.open({
+            content: "确定要删除么?",
+            yes: function(index, layero){
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                CoreUtil.sendAjax("/sysFileFjxx/delete",JSON.stringify(ids),function (res) {
+                    layer.msg(res.msg, {time:1000},function () {
+                       reloadTable();
+                    });
+                },"DELETE",false,function (res) {
+                    layer.msg("抱歉！您暂无删除用户的权限");
+                });
+            }
+        });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+        $(".table_div").show();
+        $(".operation").hide();
+        return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+        if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+            CoreUtil.sendAjax("/sysFileFjxx/add",JSON.stringify(data.field),function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+               reloadTable();
+
+            },"POST",false,function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }else {
+            CoreUtil.sendAjax("/sysFileFjxx/update",JSON.stringify(data.field),function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+               reloadTable();
+
+            },"PUT",false,function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }
+
+        return false;
+    });
+</script>

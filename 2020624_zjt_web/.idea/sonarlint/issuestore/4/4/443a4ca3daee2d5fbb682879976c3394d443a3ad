@@ -1,0 +1,40 @@
+
+E
+java:S3740D"/Provide the parametrized type for this generic.(Ýß“Þ
+E
+java:S3740D"/Provide the parametrized type for this generic.(Ýß“Þ
+F
+java:S3740Å"/Provide the parametrized type for this generic.(ŽÌÉ
+F
+java:S3740Å"/Provide the parametrized type for this generic.(ŽÌÉ
+K
+java:S3740Ñ"/Provide the parametrized type for this generic.(É›Ç™ùÿÿÿÿ
+K
+java:S3740Ñ"/Provide the parametrized type for this generic.(É›Ç™ùÿÿÿÿ
+F
+java:S3740‘"/Provide the parametrized type for this generic.(Ýß“Þ
+F
+java:S3740‘"/Provide the parametrized type for this generic.(Ýß“Þ
+F
+java:S3740˜"/Provide the parametrized type for this generic.(Ýß“Þ
+F
+java:S3740˜"/Provide the parametrized type for this generic.(Ýß“Þ
+F
+java:S3740Ú"/Provide the parametrized type for this generic.(Ýß“Þ
+F
+java:S3740Ú"/Provide the parametrized type for this generic.(Ýß“Þ
+f	java:S117W"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íöö¢
+k	java:S117X"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢û÷‘ùÿÿÿÿ
+s
+java:S1488Æ"]Immediately return this expression instead of assigning it to the temporary variable "iPage".(êËœs
+y
+java:S1488Ò"]Immediately return this expression instead of assigning it to the temporary variable "iPage".(°ÓèÑÿÿÿÿÿ
+T
+java:S1128">Remove this unused import 'com.pqkj.mapper.SysPropertyMapper'.(›Š†ò
+m
+java:S3776C"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Ž‹³Ôýÿÿÿÿ
+V	java:S125u"<This block of commented-out lines of code should be removed.(²°Þþþÿÿÿÿ
+W	java:S125¡"<This block of commented-out lines of code should be removed.(ç©Ÿ«ûÿÿÿÿ
+W	java:S125Ó"<This block of commented-out lines of code should be removed.(€ìð¿þÿÿÿÿ
+]
+java:S1126ï"AReplace this if-then-else statement by a single return statement.(Øì÷¿úÿÿÿÿ

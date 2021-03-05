@@ -1,0 +1,34 @@
+{
+	"name": "TestModule",
+	"id": "TestModule",
+	"version": "0.0.1",
+	"description": "插件描述信息",
+	"_dp_type": "nativeplugin",
+	"_dp_nativeplugin": {
+		"android": {
+			"plugins": [{
+				"type": "module",
+				"name": "TestModule",
+				"class": "com.pq.testplugin.TestModule"
+			}],
+			"hooksClass": "",
+			"integrateType": "aar",
+			"dependencies": [
+
+			],
+			"compileOptions": {
+				"sourceCompatibility": "1.8",
+				"targetCompatibility": "1.8"
+			},
+			"abis": [
+				"armeabi-v7a",
+				"arm64"
+			],
+			"minSdkVersion": "21",
+			"permissions": [],
+			"parameters": {
+
+			}
+		}
+	}
+}

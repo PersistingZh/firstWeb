@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pqkj.mapper.TaskResultViewMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pqkj.entity.TaskResultView">
+        <result column="id" property="id" />
+        <result column="task_id" property="taskId" />
+        <result column="user_id" property="userId" />
+        <result column="create_time" property="createTime" />
+        <result column="is_finish" property="isFinish" />
+        <result column="finish_time" property="finishTime" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="clock_longitude" property="clockLongitude" />
+        <result column="clock_latitude" property="clockLatitude" />
+        <result column="clock_effective" property="clockEffective" />
+        <result column="task_name" property="taskName" />
+        <result column="task_num" property="taskNum" />
+        <result column="task_desc" property="taskDesc" />
+        <result column="effective_time" property="effectiveTime" />
+        <result column="failure_time" property="failureTime" />
+        <result column="user_name" property="userName" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="is_del" property="isDel" />
+        <result column="card_number" property="cardNumber" />
+        <result column="card_type" property="cardType" />
+        <result column="clock_address" property="clockAddress" />
+        <result column="task_address" property="taskAddress" />
+        <result column="task_longitude" property="taskLongitude" />
+        <result column="task_latitude" property="taskLatitude" />
+        <result column="gldw" property="gldw" />
+        <result column="task_range" property="taskRange" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, task_id, user_id, create_time, is_finish, finish_time, start_time, end_time, clock_longitude, clock_latitude, clock_effective, task_name, task_num, task_desc, effective_time, failure_time, user_name, phone, address, is_del, card_number, card_type,clock_address, task_address ,task_longitude,task_latitude,gldw,task_range
+    </sql>
+
+</mapper>

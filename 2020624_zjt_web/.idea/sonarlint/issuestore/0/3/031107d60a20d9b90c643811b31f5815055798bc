@@ -1,0 +1,57 @@
+
+j
+java:S2095Ù"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(•¸†ûÿÿÿÿ
+J
+java:S3740E"/Provide the parametrized type for this generic.(Îüùªøÿÿÿÿ
+J
+java:S3740E"/Provide the parametrized type for this generic.(Îüùªøÿÿÿÿ
+E
+java:S3740H"/Provide the parametrized type for this generic.(İß“Ş
+E
+java:S3740H"/Provide the parametrized type for this generic.(İß“Ş
+F
+java:S3740¡"/Provide the parametrized type for this generic.(İß“Ş
+F
+java:S3740¡"/Provide the parametrized type for this generic.(İß“Ş
+F
+java:S3740»"/Provide the parametrized type for this generic.(İß“Ş
+F
+java:S3740»"/Provide the parametrized type for this generic.(İß“Ş
+E
+java:S3740í"/Provide the parametrized type for this generic.(Ãƒ†]
+F
+java:S3740î"/Provide the parametrized type for this generic.(–‰à
+F
+java:S3740ÿ"/Provide the parametrized type for this generic.(–‰à
+K
+java:S3740‰"/Provide the parametrized type for this generic.(Í”‘îûÿÿÿÿ
+K
+java:S3740‰"/Provide the parametrized type for this generic.(Í”‘îûÿÿÿÿ
+F
+java:S3740"/Provide the parametrized type for this generic.(ªŞø
+F
+java:S3740"/Provide the parametrized type for this generic.(Ë‚ÿ
+F
+java:S3740›"/Provide the parametrized type for this generic.(ªŞø
+P
+java:S1191"5Use classes from the Java API instead of Sun classes.(Ó¨Ôÿÿÿÿÿ
+f
+java:S1192ñ"JDefine a constant instead of duplicating this literal "is_finish" 3 times.(´²¶¤ÿÿÿÿÿ
+^
+java:S1192["HDefine a constant instead of duplicating this literal "user_id" 6 times.(×Ô£ñ
+a
+java:S1192B"FDefine a constant instead of duplicating this literal "phone" 6 times.(ÅËö¨ùÿÿÿÿ
+]
+java:S1192J"GDefine a constant instead of duplicating this literal "is_del" 3 times.(ÍÓ¸ˆ
+F
+java:S1128%"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+h
+java:S3776@"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(ÿ‘æî
+i
+java:S3776–"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(¡¹Û
+\
+java:S3252"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(‰ú¹
+]
+java:S3252"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(‰ú¹
+w
+java:S3923ß"[Remove this conditional structure or edit its code blocks so that they're not all the same.(º¢Úıÿÿÿÿ

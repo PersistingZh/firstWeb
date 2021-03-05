@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width initial-scale=1'>
+    <title>后台管理系统 介绍</title></head>
+<body><h1>在矫通</h1>
+<h2>技术</h2>
+
+<ul>
+    <li>核心框架：spring boot 2.1.12</li>
+    <li>持久层框架：mybatis plus</li>
+    <li>数据库连接池：alibaba druid</li>
+    <li>安全框架：apache shiro</li>
+    <li>缓存框架：redis</li>
+    <li>日志框架：logback</li>
+    <li>接口文档：Knife4j</li>
+    <li>前端模板：thymeleaf+layui2x</li>
+</ul>
+
+<h2>开发</h2>
+
+<ul>
+    <li>Model内成员变量建议与表字段数量对应，如需扩展成员变量（比如连表查询）建议创建VO，否则需在扩展的成员变量上加@TableField(exist = false)</li>
+    <li>如果表有是否删除字段，需要在Model注解@TableLogic 默认1未删 0删除， 或@TableLogic(value=&quot;逻辑未删除值&quot;,delval=&quot;逻辑删除值&quot;)</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,7 @@
+
+T
+java:S1874"9Remove this use of "DefaultHttpClient"; it is deprecated.(‹Ζ¥ύÿÿÿÿ
+U
+java:S1118":Add a private constructor to hide the implicit public one.(λΆργϋÿÿÿÿ
+j
+java:S2095"OUse try-with-resources or close this "DefaultHttpClient" in a "finally" clause.(‹Ζ¥ύÿÿÿÿ

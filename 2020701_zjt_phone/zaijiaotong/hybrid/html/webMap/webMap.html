@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,minimal-ui">
+		<title>地图展示</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/webMap.css" />
+
+		<script type="text/javascript" src="http://sgdt.mlocso.com:8000/VectorMapAbility/jssdk/auth?v=2.0&key=374a40fe37448rode48b4m78634m6z80&name=bundle"></script>
+	</head>
+	<body>
+		<div id="mapContainer"></div>
+		<div class="mapUI">
+			<div class="text-center block">
+				<div class="abs">
+					<button class="btn-abs" id="btnGetPos"><img src="./images/location_pos_000.png" ></button>
+				</div>
+				<div class="margin-top1">
+					<button class="btn btn-primary btn-dk" id="btnResetPos">查看核验地点</button>
+					<button class="btn btn-primary btn-dk" id="btnReport">定位核验</button>
+				</div>
+				<div class="post-message-section"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var userAgent = navigator.userAgent;
+		if (userAgent.indexOf('AlipayClient') > -1) {
+			// 支付宝小程序的 JS-SDK 防止 404 需要动态加载，如果不需要兼容支付宝小程序，则无需引用此 JS 文件。
+			document.writeln('<script src="https://appx/web-view.min.js"' + '>' + '<' + '/' + 'script>');
+		} else if (/QQ/i.test(userAgent) && /miniProgram/i.test(userAgent)) {
+			// QQ 小程序
+			document.write(
+				'<script type="text/javascript" src="https://qqq.gtimg.cn/miniprogram/webview_jssdk/qqjssdk-1.0.0.js"><\/script>');
+		} else if (/miniProgram/i.test(userAgent) || /MicroMessenger/i.test(userAgent)) {
+			// 微信小程序 JS-SDK 如果不需要兼容微信小程序，则无需引用此 JS 文件。
+			document.write('<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"><\/script>');
+		} else if (/toutiaomicroapp/i.test(userAgent)) {
+			// 字节跳动小程序 JS-SDK 如果不需要兼容字节跳动小程序，则无需引用此 JS 文件。
+			document.write(
+				'<script type="text/javascript" src="https://s3.pstatp.com/toutiao/tmajssdk/jssdk-1.0.1.js"><\/script>');
+		} else if (/swan/i.test(userAgent)) {
+			// 百度小程序 JS-SDK 如果不需要兼容百度小程序，则无需引用此 JS 文件。
+			document.write(
+				'<script type="text/javascript" src="https://b.bdstatic.com/searchbox/icms/searchbox/js/swan-2.0.18.js"><\/script>'
+			);
+		}
+		if (!/toutiaomicroapp/i.test(userAgent)) {
+			document.querySelector('.post-message-section').style.visibility = 'visible';
+		}
+	</script>
+	<!-- uni 的 SDK -->
+	<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
+	<script>
+		// 定义变量
+		var map;
+		// 应到的打卡点位信息
+		var marker;
+		// 自身位置点位信息
+		var marker2;
+		// 打卡范围
+		var circle;
+		// 19 * 31
+		var icon = "./images/location_red.png";
+		var icon2 = "./images/location_blue.png";
+		var icon3 = "./images/location_pos_000.png";
+		var isInsideState;
+		/** 获取 uni-app 传来的值 */
+		// 打卡目的为圆心的经纬度
+		var clockRadius = parseFloat(getQuery('clockRadius')),
+			// taskLongitude = parseFloat(getQuery('taskLongitude')),
+			// taskLatitude = parseFloat(getQuery('taskLatitude')),
+			// 定位的经纬度
+			clockLongitude = parseFloat(getQuery('clockLongitude')),
+			clockLatitude = parseFloat(getQuery('clockLatitude')),
+			//== 113.33562659703041,22.126547307875303
+			taskLongitude = new CMMap.wgs84togcj02(parseFloat(getQuery('taskLongitude')), parseFloat(getQuery('taskLatitude'))).splice(",")[0],
+			taskLatitude = new CMMap.wgs84togcj02(parseFloat(getQuery('taskLongitude')), parseFloat(getQuery('taskLatitude'))).splice(",")[1];
+			// 定位的经纬度
+			// clockLongitude = new CMMap.wgs84togcj02(parseFloat(getQuery('clockLongitude')),parseFloat(getQuery('clockLatitude'))).splice(",")[0],
+			// clockLatitude = new CMMap.wgs84togcj02(parseFloat(getQuery('clockLongitude')),parseFloat(getQuery('clockLatitude'))).splice(",")[1];
+			console.log("==========1====2=21===1=21=2=1=2")
+			console.log(clockLongitude)
+			console.log(clockLatitude)
+			// 地图中心点配置
+			var mapParam = {
+				center: [taskLongitude, taskLatitude]
+			};
+		// 圆配置
+		var circleParam = {
+			center: [taskLongitude, taskLatitude],
+			radius: clockRadius
+		};
+		// 应到的打卡点
+		var markerParam = {
+			center: [taskLongitude, taskLatitude],
+			icon: icon,
+			iconText: "核验地点"
+		};
+		// 自身位置点
+		var marker2Param = {
+			center: [clockLongitude, clockLatitude],
+			icon: icon2,
+			iconText: "当前地点"
+		};
+		var btnReport = document.getElementById("btnReport");
+		var btnGetPos = document.getElementById("btnGetPos");
+		var btnResetPos = document.getElementById("btnResetPos");
+		btnReport.disabled = true;
+		btnGetPos.disabled = true;
+		btnResetPos.disabled = true;
+
+		document.addEventListener('UniAppJSBridgeReady', function() {
+			// uni.postMessage({
+			// 	data: {
+			// 		action: 'message',
+			// 	}
+			// });
+			uni.getEnv(function(res) {
+				// console.log('当前环境：' + JSON.stringify(res));
+			});
+		});
+		/**
+		 * 初始化地图
+		 */
+		function mapInit() {
+			map = new CMMap.Map("mapContainer", {
+				baseLayer: true,
+				building: true,
+				label: true,
+				buildingShadow: true,
+				buildingTranslucent: true,
+				zoom: 17,
+				dragEnable: true,
+				center: new CMMap.LngLat(mapParam.center[0], mapParam.center[1]), // 地图中心点
+			});
+
+			map.on('complete', function() {
+				// 地图图块加载完成后触发
+				// 创建圆
+				addCircle();
+				// 创建应到打卡点
+				marker = addMarker(markerParam.center[0], markerParam.center[1], markerParam.icon, markerParam.iconText);
+				// 创建自身点位
+				marker2 = addMarker(marker2Param.center[0], marker2Param.center[1],marker2Param.icon, marker2Param.iconText);
+				 // marker2 = addMarker(new CMMap.wgs84togcj02(parseFloat(marker2Param.center[0]), parseFloat(marker2Param.center[1])).splice(",")[0],
+				 //  new CMMap.wgs84togcj02(parseFloat(marker2Param.center[0]), parseFloat(marker2Param.center[1])).splice(",")[1], 
+				 //  marker2Param.icon, marker2Param.iconText);
+				btnReport.disabled = false;
+				btnResetPos.disabled = false;
+				btnGetPos.disabled = false;
+				btnReport.onclick = function() {
+					setBtnReportState(pointInsideCircle(marker, marker2, circleParam.radius));
+				}
+				btnResetPos.onclick = function() {
+					map.setCenter(markerParam.center)
+				}
+				btnGetPos.onclick = function() {
+					map.setCenter(marker2Param.center)
+				}
+			});
+		}
+
+		function setBtnReportState(state) {
+			if (state) {
+				// alert("打卡成功");
+				uni.postMessage({
+					data: {
+						action: true,
+						clockLongitude: new CMMap.gcj02towgs84(parseFloat(getQuery('clockLongitude')),parseFloat(getQuery('clockLatitude'))).splice(",")[0],
+						clockLatitude: new CMMap.gcj02towgs84(parseFloat(getQuery('clockLongitude')),parseFloat(getQuery('clockLatitude'))).splice(",")[1]
+					}
+				});
+			} else {
+				alert("定位核验失败，不在定位核验范围内");
+				uni.postMessage({
+					data: {
+						action: false,
+						clockLongitude: new CMMap.gcj02towgs84(parseFloat(getQuery('clockLongitude')),parseFloat(getQuery('clockLatitude'))).splice(",")[0],
+						clockLatitude: new CMMap.gcj02towgs84(parseFloat(getQuery('clockLongitude')),parseFloat(getQuery('clockLatitude'))).splice(",")[1]
+					}
+				});
+			}
+		}
+		if (window.attachEvent) {
+			window.attachEvent("onload", mapInit); //IE
+		} else {
+			window.addEventListener("load", mapInit, false); //FF
+		}
+		/** 添加圆 / 删除圆 */
+		function addCircle() {
+			if (!circle) {
+				circle = new CMMap.Circle({
+					center: new CMMap.LngLat(circleParam.center[0], circleParam.center[1]), // 圆心位置
+					radius: circleParam.radius, //半径
+					strokeColor: "#0395fd", //线颜色
+					strokeOpacity: 1, //线透明度
+					strokeWeight: 1, //线粗细度
+					fillColor: "#0395fd", //填充颜色
+					fillOpacity: 0.4 //填充透明度	
+				});
+			}
+			circle.setMap(map);
+		};
+
+		function deleteCircle() {
+			circle.setMap(null);
+		};
+
+		//添加点 / 删除
+		function addMarker(lng, lat, icon, iconText) {
+			var mk = new CMMap.Marker({
+				position: new CMMap.LngLat(lng, lat),
+				// title:"打卡位置111",
+				offset: new CMMap.Pixel(-10, -20),
+				clickable: true,
+			});
+			mk.setMap(map);
+			setLabel(mk, icon, iconText);
+			return mk || null;
+		};
+
+		function setLabel(mk, icon, iconText) {
+			// 自定义点标记内容
+			var markerContent = document.createElement("div");
+			console.log("==========markerContent")
+			console.log(markerContent)
+			// 点标记中的图标
+			var markerImg = document.createElement("img");
+			markerImg.className = "markerImg";
+			markerImg.src = icon;
+			markerContent.appendChild(markerImg);
+
+			// 点标记中的文本
+			var markerSpan = document.createElement("span");
+			markerSpan.className = 'markerSpan';
+			markerSpan.innerHTML = iconText;
+			markerContent.appendChild(markerSpan);
+			mk.setContent(markerContent); //更新点标记内容
+		}
+
+		function deleteMarker(mk) {
+			mk.setMap(null);
+		};
+		//取url中的参数值
+		function getQuery(name) {
+			// 正则：[找寻'&' + 'url参数名字' = '值' + '&']（'&'可以不存在）
+			let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			let r = window.location.search.substr(1).match(reg);
+			// console.log(r);
+			if (r != null) {
+				// 对参数值进行解码
+				return decodeURIComponent(r[2]);
+			}
+			return null;
+		}
+		/** 判断点是否在圆内 : marker 点，circle圆心，半径 */
+		function pointInsideCircle(m1, m2, r) {
+			var p1 = m1.getPosition();
+			var p2 = m2.getPosition();
+			var distance = Math.round(p1.distance(p2));
+			console.log("两点的距离");
+			console.log(distance)
+			console.log(r)
+			return distance < r ? true : false;
+		}
+		/*** 打卡方法 */
+		function reportPos() {
+			console.log("定位核验方法===")
+		}
+	</script>
+
+</html>

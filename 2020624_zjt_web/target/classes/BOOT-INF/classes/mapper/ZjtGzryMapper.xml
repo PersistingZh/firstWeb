@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pqkj.mapper.ZjtGzryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pqkj.entity.ZjtGzry">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="card_type" property="cardType" />
+        <result column="card_number" property="cardNumber" />
+        <result column="units" property="units" />
+        <result column="department" property="department" />
+        <result column="position" property="position" />
+        <result column="phone" property="phone" />
+        <result column="password" property="password" />
+        <result column="verification_code" property="verificationCode" />
+        <result column="is_verification" property="isVerification" />
+        <result column="verification_code_time" property="verificationCodeTime" />
+        <result column="verification_time" property="verificationTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_del" property="isDel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, card_type, card_number, units, department, position, phone, password, verification_code, is_verification, verification_code_time, verification_time, create_time, update_time, is_del
+    </sql>
+
+</mapper>

@@ -1,0 +1,88 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "登陆页",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTextStyle": "#108bff"
+			}
+		},
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "在矫通",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/locationWarning/locationWarning",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "位置预警"
+			}
+		}, {
+			"path": "pages/checkInTask/checkInTask",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "定位核验任务"
+			}
+		},{
+			"path": "pages/checkInTask/checkInTaskList",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "定位核验列表"
+			}
+		}, {
+			"path": "pages/signOut/signOut",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "退出登录"
+			}
+		}, {
+			"path": "pages/myInfo/myInfo",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/map/map",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "签到"
+			}
+		}, {
+			"path": "pages/faceCheck/faceCheck",
+			"style": {
+				"navigationBarTextStyle": "#108bff",
+				"navigationBarBackgroundColor": "#108bff",
+				"navigationBarTitleText": "人脸核验"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "#108bff",
+		"navigationBarTitleText": "在矫通",
+		"navigationBarBackgroundColor": "#108bff",
+		"backgroundColor": "#edf1f3"
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="panel panel-default operation" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
+                             <input name="id" hidden/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户id</label>
+                    <div class="layui-input-block">
+                        <input type="userId" name="userId" placeholder="请输入用户id" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">预警id</label>
+                    <div class="layui-input-block">
+                        <input type="warningId" name="warningId" placeholder="请输入预警id" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <input type="createTime" name="createTime" placeholder="请输入创建时间" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">触发预警经度</label>
+                    <div class="layui-input-block">
+                        <input type="createLongitude" name="createLongitude" placeholder="请输入触发预警经度" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">触发预警纬度</label>
+                    <div class="layui-input-block">
+                        <input type="createLatitude" name="createLatitude" placeholder="请输入触发预警纬度" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table_div">
+    <div id="searchParam"  shiro:hasPermission="zjtWarningRecord:list">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" id="key" class="layui-input"  autocomplete="off" placeholder="请输入">
+            </div>
+            <div class="layui-input-inline ">
+                <button class="layui-btn"   id="search">查询</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="zjtWarningRecord:add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="zjtWarningRecord:delete">删除</button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="zjtWarningRecord:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="zjtWarningRecord:delete">删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script>
+    var layer = layui.layer;
+    var table = layui.table;
+    var form = layui.form;
+    var $ = jQuery = layui.jquery;
+
+    //渲染table
+    table.render({
+        elem: '#showTable'
+        , page: true //开启分页
+        , url: '/zjtWarningRecord/listByPage' //数据接口
+        , method: "POST"
+        , contentType: 'application/json;charset=utf8'
+        , headers: {'authorization': CoreUtil.getData("access_token")}
+        , parseData: function (res) { //res 即为原始返回的数据
+            return {
+                "code": res.code, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.data.total, //解析数据长度
+                "data": res.data.records //解析数据列表
+            };
+        }
+        , cols: [
+            [ //表头
+                {type: 'checkbox', fixed: 'left'},
+                {type: 'numbers', fixed: 'left',title:"序号"},
+                {width: 300, toolbar: "#tool", title: '操作'},
+                    {field: 'id', title: 'id', width: 300, sort: true},
+                    {field: 'userId', title: '用户id', width: 300, sort: true},
+                    {field: 'warningId', title: '预警id', width: 300, sort: true},
+                    {field: 'createTime', title: '创建时间', width: 300, sort: true},
+                    {field: 'createLongitude', title: '触发预警经度', width: 300, sort: true},
+                    {field: 'createLatitude', title: '触发预警纬度', width: 300, sort: true},
+            ]
+        ]
+        , toolbar: '#toolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        , id: 'tableId' //reload用
+    });
+
+    //刷新table
+    var reloadTable = function () {
+        var key = $('#key').val();
+        //执行重载
+        table.reload('tableId', {
+            where: {
+                "key": key
+            }
+        }, 'data');
+    }
+    //搜索
+    $('#search').click(function () {
+        reloadTable();
+    })
+
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event){
+            case 'batchDeleted':
+                var checkStatus = table.checkStatus(obj.config.id);
+                var data = checkStatus.data;
+                if(data.length==0){
+                    layer.msg("请选择要批量删除的列");
+                }else {
+                    var ids = [];
+                    $(data).each(function (index,item) {
+                        ids.push(item.id);
+                    });
+                    tipDialog(ids);
+                }
+                break;
+            case 'add':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("新增");
+                $(".operation input[name=id]").val("");
+                $(".operation input[name=userId]").val("");
+                $(".operation input[name=warningId]").val("");
+                $(".operation input[name=createTime]").val("");
+                $(".operation input[name=createLongitude]").val("");
+                $(".operation input[name=createLatitude]").val("");
+                break;
+        };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+        var data = obj.data;
+        switch (obj.event) {
+            case 'del':
+                var ids=[];
+                ids.push(data.id);
+                tipDialog(ids);
+                break;
+            case 'edit':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("编辑");
+                    $(".operation input[name=id]").val(data.id);
+                    $(".operation input[name=userId]").val(data.userId);
+                    $(".operation input[name=warningId]").val(data.warningId);
+                    $(".operation input[name=createTime]").val(data.createTime);
+                    $(".operation input[name=createLongitude]").val(data.createLongitude);
+                    $(".operation input[name=createLatitude]").val(data.createLatitude);
+                break;
+        }
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+        layer.open({
+            content: "确定要删除么?",
+            yes: function(index, layero){
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                CoreUtil.sendAjax("/zjtWarningRecord/delete",JSON.stringify(ids),function (res) {
+                    layer.msg(res.msg, {time:1000},function () {
+                       reloadTable();
+                    });
+                },"DELETE",false,function (res) {
+                    layer.msg("抱歉！您暂无删除用户的权限");
+                });
+            }
+        });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+        $(".table_div").show();
+        $(".operation").hide();
+        return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+        if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+            CoreUtil.sendAjax("/zjtWarningRecord/add",JSON.stringify(data.field),function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+               reloadTable();
+
+            },"POST",false,function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }else {
+            CoreUtil.sendAjax("/zjtWarningRecord/update",JSON.stringify(data.field),function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+               reloadTable();
+
+            },"PUT",false,function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }
+
+        return false;
+    });
+</script>

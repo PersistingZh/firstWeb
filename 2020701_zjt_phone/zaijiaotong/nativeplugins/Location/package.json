@@ -1,0 +1,42 @@
+{
+	"name": "Location",
+	"id": "Location",
+	"version": "0.0.1",
+	"description": "移动定位插件",
+	"_dp_type": "nativeplugin",
+	"_dp_nativeplugin": {
+		"android": {
+			"plugins": [{
+				"type": "module",
+				"name": "Location",
+				"class": "com.pq.location.Location"
+			}],
+			"hooksClass": "",
+			"integrateType": "aar",
+			"dependencies": [
+				"com.android.support:recyclerview-v7:26.1.0",
+				"com.android.support:support-v4:26.1.0",
+				"com.android.support:appcompat-v7:26.1.0",
+				"com.alibaba:fastjson:1.1.46.android",
+				"pub.devrel:easypermissions:2.0.1"
+			],
+			"compileOptions": {
+				"sourceCompatibility": "1.8",
+				"targetCompatibility": "1.8"
+			},
+			"abis": [
+				"armeabi-v7a",
+				"arm64"
+			],
+			"minSdkVersion": "21",
+			"permissions": [],
+			"parameters": {
+				"android_appid": {
+					"des": "移动定位的key",
+					"key": "com.cmmap.api.v2.apikey",
+					"value": "${android_appid}"
+				}
+			}
+		}
+	}
+}

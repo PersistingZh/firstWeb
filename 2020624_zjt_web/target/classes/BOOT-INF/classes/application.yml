@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  application:
+    #道闸机服务
+    name: DzjService
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 100MB
+server:
+  port: 8081
+  max-http-header-size: 102400
+swagger2:
+  enable: true
+jwt:
+  secretKey: 78944878877848fg)
+  accessTokenExpireTime: PT2H
+  refreshTokenExpireTime: PT8H
+  refreshTokenExpireAppTime: P30D
+  issuer: pqkj.com

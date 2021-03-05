@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pqkj.mapper.ZjtWarningMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pqkj.entity.ZjtWarning">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="warning_content" property="warningContent" />
+        <result column="warning_time" property="warningTime" />
+        <result column="warning_desc" property="warningDesc" />
+        <result column="warning_longitude" property="warningLongitude" />
+        <result column="warning_latitude" property="warningLatitude" />
+        <result column="warning_name" property="warningName" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="create_time" property="createTime" />
+        <result column="warning_type" property="warningType" />
+        <result column="warning_range" property="warningRange" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, warning_content, warning_time, warning_desc,warning_longitude, warning_latitude, start_time, end_time, create_time, warning_type, warning_range
+    </sql>
+
+</mapper>

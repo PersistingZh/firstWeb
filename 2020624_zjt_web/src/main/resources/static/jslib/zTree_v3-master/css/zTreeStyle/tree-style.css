@@ -1,0 +1,102 @@
+.treeWrap{
+	display:none; 
+	position: absolute;
+	z-index: 10; 
+	background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          
+	
+	overflow-y:auto;
+	min-height:50px;
+	padding: 0;
+}
+
+
+/*字体样式*/
+@font-face {font-family: 'Open Sans';font-style: normal;font-weight: 300;src: local('Open Sans Light'), local('OpenSans-Light'), url(DXI1ORHCpsQm3Vp6mXoaTegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');}
+@font-face {font-family: 'Open Sans';font-style: normal;font-weight: 400;src: local('Open Sans'), local('OpenSans'), url(DXI1ORHCpsQm3Vp6mXoaTegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');}
+@font-face {font-family: 'Open Sans';font-style: normal;font-weight: 700;src: local('Open Sans Bold'), local('OpenSans-Bold'), url(DXI1ORHCpsQm3Vp6mXoaTegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');}
+/* 复选框 */
+.ztree li span.button.chk {border: 1px solid #999999;background-image: none;width:13px;height:13px; margin:0 3px 0 0;cursor: auto;position: relative;}
+.ztree li span.button.chk:after{content: '';display: block;font-family: helvetica;display: inline-block;width: 11px;height: 11px;left: 1px;bottom: 0;line-height: 11px;font-size: 11px;text-align: center;position: absolute;}
+.ztree li span.button.chk:before{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);background-color:#F5F5F5;-moz-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;-webkit-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out;}
+.ztree li span.button.chk.checkbox_true_full, .ztree li span.button.chk.checkbox_true_full_focus {background-color:rgb(95,165,217); border:1px solid rgb(95,165,217);}
+.ztree li span.button.chk.checkbox_true_full:after, .ztree li span.button.chk.checkbox_true_full_focus:after{content: "\2713";color: white;}
+.ztree li span.button.chk.checkbox_true_full:before{-moz-box-shadow: inset 0 0 0 10px #158EC6;-webkit-box-shadow: inset 0 0 0 10px #158EC6;box-shadow: inset 0 0 0 10px #158EC6;}
+.ztree li span.button.chk.checkbox_false_full_focus:after, .ztree li span.button.chk.checkbox_true_part_focus:after, .ztree li span.button.chk.checkbox_true_part:after {content: "\2713";color: #c7c7c7;}
+.ztree li span.button.chk.checkbox_true_part {-webkit-box-shadow: inset 0 0 0 10px #158EC6;box-shadow: inset 0 0 0 10px #158EC6;}
+/* 单选框 */
+.ztree li span.button.chk.radio_false_full, .ztree li span.button.chk.radio_false_full_focus, .ztree li span.button.chk.radio_false_part, .ztree li span.button.chk.radio_false_part_focus, .ztree li span.button.chk.radio_false_disable, .ztree li span.button.chk.radio_true_full, .ztree li span.button.chk.radio_true_full_focus, .ztree li span.button.chk.radio_true_part, .ztree li span.button.chk.radio_true_part_focus, .ztree li span.button.chk.radio_true_disable{border-radius: 50%;}
+.ztree li span.button.chk.radio_true_part, .ztree li span.button.chk.radio_true_part_focus, .ztree li span.button.chk.radio_true_full, .ztree li span.button.chk.radio_true_full_focus{-webkit-box-shadow: inset 0 0 0 10px #158EC6;box-shadow: inset 0 0 0 10px #158EC6;}
+.ztree li span.button.chk.radio_false_full:before, .ztree li span.button.chk.radio_false_part:before, .ztree li span.button.chk.radio_false_disable:before{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);background-color:#F5F5F5;-moz-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;-webkit-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out;} 
+.ztree li span.button.chk.radio_true_full:before, .ztree li span.button.chk.radio_true_full_focus:before, .ztree li span.button.chk.radio_true_part:before, .ztree li span.button.chk.radio_true_part_focus:before, .ztree li span.button.chk.radio_true_disable:before{-moz-box-shadow: inset 0 0 0 10px #158EC6;-webkit-box-shadow: inset 0 0 0 10px #158EC6;box-shadow: inset 0 0 0 10px #158EC6;background: red;}
+.ztree li span.button.chk.radio_false_full:after, .ztree li span.button.chk.radio_false_full_focus:after, .ztree li span.button.chk.radio_false_part:after, .ztree li span.button.chk.radio_false_part_focus:after, .ztree li span.button.chk.radio_false_disable:after{color: #fff;}
+.ztree li span.button.chk.radio_true_full:after, .ztree li span.button.chk.radio_true_full_focus:after, .ztree li span.button.chk.radio_true_part:after, .ztree li span.button.chk.radio_true_part_focus:after, .ztree li span.button.chk.radio_true_disable:after{content: '\2022';color: white;top:0;}
+.ztree li span.button.chk.radio_false_part_focus:after,.ztree li span.button.chk.radio_false_full_focus:after{content: '\2022';top:0;color: #158EC6;}
+/* 节点展开 */
+.ztree li span.button.root_open,.ztree li span.button.roots_open,.ztree li span.button.center_open,.ztree li span.button.bottom_open,.ztree li span.button.noline_open{background-image:url('./img/ui-icons.png');background-position:-66px 3px;}
+.ztree.zicon-add  li span.button.root_open,.ztree li span.button.roots_open,.ztree li span.button.center_open,.ztree li span.button.bottom_open,.ztree li span.button.noline_open{background-position:-49px -128px;}
+/* 节点关闭 */
+.ztree li span.button.root_close,.ztree li span.button.roots_close,.ztree li span.button.center_close,.ztree li span.button.bottom_close,.ztree li span.button.noline_close{background-image:url('./img/ui-icons.png');background-position:-34px 1px;}
+.ztree.zicon-add li span.button.root_close,.ztree li span.button.roots_close,.ztree li span.button.center_close,.ztree li span.button.bottom_close,.ztree li span.button.noline_close{background-position:-17px -128px;}
+/* 中间线 */
+.ztree li span.button.roots_docu, .ztree li span.button.center_docu,.ztree li span.button.bottom_docu{position: relative;background-image: none;}
+.ztree li span.button.bottom_docu:after, .ztree li span.button.roots_docu:after, .ztree li span.button.center_docu:after{content: ' ';display: block;width: 50%;height: 1px;background: #158EC6;position: absolute;left: 6px;top: 9px;}
+.ztree li span.button.center_docu:before{content: ' ';display: block;width: 1px;height: 100%;background: #158EC6;position: absolute;left: 6px;top: 0px;}
+.ztree li span.button.bottom_docu:before{content: ' ';display: block;width: 1px;height: 50%;background: #158EC6;position: absolute;left: 6px;top: 0px;}
+.ztree li span.button.roots_docu:before{
+	content: ' ';display: block;width: 1px;height: 50%;background: #158EC6;position: absolute;left: 6px;top: 50%;
+}
+/* 线 */
+.ztree li ul.line{position: relative;background-image: none;}
+.ztree li ul.line:before{position: absolute;left: 6px;top: 0px;content:' ';display:block;width: 1px;height: 100%;background: #158EC6;}
+
+/* ztree li a css */
+.ztree li a{ padding:0px;margin: 0px;font-family: '微软雅黑','Microsoft Yahei';}
+.ztree li a:hover{ text-decoration: none; color: #46a1ff; }
+.ztree li a.curSelectedNode{background: transparent; border: none;color: #46a1ff;padding:0px;font-weight: bold;}
+
+
+/* 树形菜单样式 */
+.ztree-menu {height: 100%;}
+.ztree-menu .ztree{ overflow: auto; height: 98%; }
+.ztree-menu.noicon .ztree{ margin-left: 15px; margin-right: 15px; }
+.ztree-menu .ztree li{ width: 100%; display: block; min-height: 19px; background: white;}
+.ztree-menu .ztree li ul { padding-left: 5px; }
+.ztree-menu .ztree li a{ width: 100%; height: 19px;line-height: 8px; overflow: hidden;vertical-align:middle;}
+.ztree-menu .ztree li a>span{ display: inline-block; width: 90%; }
+.ztree-menu .ztree li span.button{ /*display: none;*/
+	vertical-align:middle;}
+.ztree-menu.noicon .ztree li a>span{ width: 100%; }
+.ztree-menu.noicon .ztree li span.button{ display: none; }
+.ztree-menu .ztree li a .m-item{
+	width: 100%;
+	height: 18px;
+	border-bottom: 1px dashed transparent;
+	display: -webkit-box;
+	display: box;
+	-webkit-box-orient:horizontal;
+	font-size: 13px;
+	font-family: '微软雅黑','Microsoft YaHei';
+	color: black;
+}
+.ztree-menu .ztree li a .m-item label{ display: block; -webkit-box-flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;cursor:pointer; }
+/* 数量标签 */
+.ztree-menu .ztree li a .m-item span{ height: 12px; line-height: 12px; display: block; padding: 0 5px;margin-top: 2px;  border: 1px solid #ccc; border-radius: 5px; background: #ccc; color: white; font-size: 10px; }
+/* 选中效果 */
+.ztree-menu .ztree li a.curSelectedNode .m-item { color: #81b5f9;background: transparent;}
+.ztree-menu .ztree li a.curSelectedNode .m-item span{ border-color: #75b5f9; background: #75b5f9; }
+.ztree-menu .ztree li a.curSelectedNode + ul li a .m-item span{	background: transparent; color: black; }
+/*  */
+.ztree-menu >.ztree > li > a > span > div.m-item > label{ font-weight: bold;}
+/* 二级以下显示虚线 */
+.ztree-menu >.ztree > li  > ul > li > a > span > div.m-item {border-color: #dadada;}
+.ztree-menu >.ztree > li  ul  li  a  span div.m-item label{ color: #797979;}
+.ztree-menu >.ztree > li  ul  li  a  span div.m-item span{ background: transparent; color: black; }

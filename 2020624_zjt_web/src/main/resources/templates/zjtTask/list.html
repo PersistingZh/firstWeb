@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="panel panel-default operation" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
+            <input name="id" hidden/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务名称</label>
+                <div class="layui-input-block">
+                    <input type="taskName" name="taskName" placeholder="请输入任务名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务编号</label>
+                <div class="layui-input-block">
+                    <input type="taskNum" name="taskNum" placeholder="请输入任务编号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务描述</label>
+                <div class="layui-input-block">
+                    <input type="taskDesc" name="taskDesc" placeholder="请输入任务描述" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-block">
+                    <input type="startTime" name="startTime" placeholder="请输入开始时间" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-block">
+                    <input type="endTime" name="endTime" placeholder="请输入结束时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务创建时间</label>
+                <div class="layui-input-block">
+                    <input type="createTime" name="createTime" placeholder="请输入任务创建时间" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务修改时间</label>
+                <div class="layui-input-block">
+                    <input type="updateTime" name="updateTime" placeholder="请输入任务修改时间" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                    <button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table_div">
+    <div id="searchParam" shiro:hasPermission="zjtTask:list">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" id="key" class="layui-input" autocomplete="off" placeholder="请输入">
+            </div>
+            <div class="layui-input-inline ">
+                <button class="layui-btn" id="search">查询</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="layui-table" id="showTable" lay-filter="showTable"></table>
+
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add" shiro:hasPermission="zjtTask:add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="zjtTask:delete">删除</button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="zjtTask:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="zjtTask:delete">删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script>
+    var layer = layui.layer;
+    var table = layui.table;
+    var form = layui.form;
+    var $ = jQuery = layui.jquery;
+
+    //渲染table
+    table.render({
+        elem: '#showTable'
+        , page: true //开启分页
+        , url: '/zjtTask/listByPage' //数据接口
+        , method: "POST"
+        , contentType: 'application/json;charset=utf8'
+        , headers: {'authorization': CoreUtil.getData("access_token")}
+        , parseData: function (res) { //res 即为原始返回的数据
+            return {
+                "code": res.code, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.data.total, //解析数据长度
+                "data": res.data.records //解析数据列表
+            };
+        }
+        , cols: [
+            [ //表头
+                {type: 'checkbox', fixed: 'left'},
+                {type: 'numbers', fixed: 'left', title: "序号"},
+                {width: 300, toolbar: "#tool", title: '操作'},
+                {field: 'id', title: '任务id', width: 300, sort: true},
+                {field: 'taskName', title: '任务名称', width: 300, sort: true},
+                {field: 'taskNum', title: '任务编号', width: 300, sort: true},
+                {field: 'taskDesc', title: '任务描述', width: 300, sort: true},
+                {field: 'startTime', title: '开始时间', width: 300, sort: true},
+                {field: 'endTime', title: '结束时间', width: 300, sort: true},
+                {field: 'createTime', title: '任务创建时间', width: 300, sort: true},
+                {field: 'updateTime', title: '任务修改时间', width: 300, sort: true},
+                {field: 'cycle', title: '周期（1.每日，2.每月）', width: 300, sort: true},
+                {field: 'effectiveTime', title: '生效时间', width: 300, sort: true},
+                {field: 'failureTime', title: '失效时间', width: 300, sort: true},
+                {field: 'taskAddress', title: '任务地址', width: 300, sort: true},
+                {field: 'taskLongitude', title: '任务经度', width: 300, sort: true},
+                {field: 'taskLatitude', title: '任务纬度', width: 300, sort: true},
+            ]
+        ]
+        , toolbar: '#toolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        , id: 'tableId' //reload用
+    });
+
+    //刷新table
+    var reloadTable = function () {
+        var key = $('#key').val();
+        //执行重载
+        table.reload('tableId', {
+            where: {
+                "key": key
+            }
+        }, 'data');
+    }
+    //搜索
+    $('#search').click(function () {
+        reloadTable();
+    })
+
+    //表头工具
+    table.on('toolbar(showTable)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+            case 'batchDeleted':
+                var checkStatus = table.checkStatus(obj.config.id);
+                var data = checkStatus.data;
+                if (data.length == 0) {
+                    layer.msg("请选择要批量删除的列");
+                } else {
+                    var ids = [];
+                    $(data).each(function (index, item) {
+                        ids.push(item.id);
+                    });
+                    tipDialog(ids);
+                }
+                break;
+            case 'add':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("新增");
+                $(".operation input[name=id]").val("");
+                $(".operation input[name=taskName]").val("");
+                $(".operation input[name=taskNum]").val("");
+                $(".operation input[name=taskDesc]").val("");
+                $(".operation input[name=startTime]").val("");
+                $(".operation input[name=endTime]").val("");
+                $(".operation input[name=createTime]").val("");
+                $(".operation input[name=updateTime]").val("");
+                break;
+        }
+        ;
+    });
+    //列操作
+    table.on('tool(showTable)', function (obj) {
+        var data = obj.data;
+        switch (obj.event) {
+            case 'del':
+                var ids = [];
+                ids.push(data.id);
+                tipDialog(ids);
+                break;
+            case 'edit':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("编辑");
+                $(".operation input[name=id]").val(data.id);
+                $(".operation input[name=taskName]").val(data.taskName);
+                $(".operation input[name=taskNum]").val(data.taskNum);
+                $(".operation input[name=taskDesc]").val(data.taskDesc);
+                $(".operation input[name=startTime]").val(data.startTime);
+                $(".operation input[name=endTime]").val(data.endTime);
+                $(".operation input[name=createTime]").val(data.createTime);
+                $(".operation input[name=updateTime]").val(data.updateTime);
+                break;
+        }
+    });
+
+    //删除
+    var tipDialog = function (ids) {
+        layer.open({
+            content: "确定要删除么?",
+            yes: function (index, layero) {
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                CoreUtil.sendAjax("/zjtTask/delete", JSON.stringify(ids), function (res) {
+                    layer.msg(res.msg, {time: 1000}, function () {
+                        reloadTable();
+                    });
+                }, "DELETE", false, function (res) {
+                    layer.msg("抱歉！您暂无删除用户的权限");
+                });
+            }
+        });
+    };
+
+    //返回
+    $("#btn_cancel").click(function () {
+        $(".table_div").show();
+        $(".operation").hide();
+        return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function (data) {
+        if (data.field.id === undefined || data.field.id === null || data.field.id === "") {
+            CoreUtil.sendAjax("/zjtTask/add", JSON.stringify(data.field), function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+                reloadTable();
+
+            }, "POST", false, function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        } else {
+            CoreUtil.sendAjax("/zjtTask/update", JSON.stringify(data.field), function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+                reloadTable();
+
+            }, "PUT", false, function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }
+
+        return false;
+    });
+</script>

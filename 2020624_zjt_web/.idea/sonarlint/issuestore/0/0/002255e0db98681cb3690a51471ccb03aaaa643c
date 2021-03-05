@@ -1,0 +1,18 @@
+
+a
+java:S3252)"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(âÛ«‰ûÿÿÿÿ
+`
+java:S3252)"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(âÛ«‰ûÿÿÿÿ
+N	java:S106."9Replace this use of System.out or System.err by a logger.(€–ë
+N	java:S106"9Replace this use of System.out or System.err by a logger.(¥ÏÜ
+N	java:S106("9Replace this use of System.out or System.err by a logger.(úÉ¡Ë
+S	java:S106E"9Replace this use of System.out or System.err by a logger.(›æÈ ÿÿÿÿÿ
+N	java:S106D"9Replace this use of System.out or System.err by a logger.(€–ë
+X
+java:S1128"=Remove this unused import 'com.pqkj.common.utils.DataResult'.(–¡ª¼ùÿÿÿÿ
+b
+java:S1192"LDefine a constant instead of duplicating this literal "cn-shanghai" 4 times.( ş“ù
+N	java:S106C"9Replace this use of System.out or System.err by a logger.(²òá
+N	java:S106-"9Replace this use of System.out or System.err by a logger.(²òá
+N	java:S106?"9Replace this use of System.out or System.err by a logger.(úÉ¡Ë
+S	java:S106/"9Replace this use of System.out or System.err by a logger.(›æÈ ÿÿÿÿÿ

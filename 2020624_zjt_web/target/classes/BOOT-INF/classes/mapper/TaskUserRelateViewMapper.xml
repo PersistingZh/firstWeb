@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pqkj.mapper.TaskUserRelateViewMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pqkj.entity.TaskUserRelateView">
+        <result column="id" property="id" />
+        <result column="task_id" property="taskId" />
+        <result column="user_id" property="userId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="user_name" property="userName" />
+        <result column="phone" property="phone" />
+        <result column="task_name" property="taskName" />
+        <result column="task_num" property="taskNum" />
+        <result column="task_desc" property="taskDesc" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="cycle" property="cycle" />
+        <result column="effective_time" property="effectiveTime" />
+        <result column="failure_time" property="failureTime" />
+        <result column="is_generate" property="isGenerate" />
+        <result column="gldw" property="gldw" />
+        <result column="is_del" property="isDel" />
+        <result column="task_range" property="taskRange" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, task_id, user_id, create_time, update_time, user_name, phone, task_name, task_num, task_desc, start_time, end_time,cycle,effective_time,failure_time,is_generate,gldw, is_del,task_range
+    </sql>
+
+</mapper>

@@ -1,0 +1,2 @@
+include ':app', ':testplugin', ':uniplugin_module', ':location'
+rootProject.name='zaijiaotong'

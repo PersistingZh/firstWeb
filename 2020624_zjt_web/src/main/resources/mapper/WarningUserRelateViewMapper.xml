@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pqkj.mapper.WarningUserRelateViewMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pqkj.entity.WarningUserRelateView">
+        <result column="id" property="id" />
+        <result column="warning_id" property="warningId" />
+        <result column="user_id" property="userId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="warning_content" property="warningContent" />
+        <result column="warning_desc" property="warningDesc" />
+        <result column="warning_latitude" property="warningLatitude" />
+        <result column="warning_longitude" property="warningLongitude" />
+        <result column="warning_name" property="warningName" />
+        <result column="warning_time" property="warningTime" />
+        <result column="warning_type" property="warningType" />
+        <result column="user_name" property="userName" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="is_del" property="isDel" />
+        <result column="card_number" property="cardNumber" />
+        <result column="card_type" property="cardType" />
+        <result column="gldw" property="gldw" />
+        <result column="warning_range" property="warningRange" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, warning_id, user_id, create_time, update_time, warning_content, warning_desc, warning_latitude, warning_longitude, warning_name, warning_time, warning_type, user_name, phone, address, is_del, card_number, card_type, gldw,warning_range
+    </sql>
+
+</mapper>

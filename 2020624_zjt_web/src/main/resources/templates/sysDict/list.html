@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="/jslib/zTree_v3-master/css/metroStyle/metroStyle.css" type="text/css"/>
+<style>
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="container_left table--panel" style="width: 350px;margin-left: 10px;margin-bottom: 10px;float: left">
+    <div class="form--group  border-bottom border-primary">
+        <span style="font-size: 16px;line-height: 30px;font-weight: bold;">数据字典</span>
+        <button style="height: 30px;margin-bottom: 5px;" class="btn btn-primary pull-right"  onclick="gSysDict.fnGetSysDicTree(0);gSysDict.fnInitSjzdMngList(0);$('#parent_id').val('0');"><i class="fa fa-refresh"></i> </button>
+    </div>
+    <div class="box-body">
+        <div class="pull-right">
+            <div class="ztree_box">
+                <ul id="sysDicTree" class="ztree"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default operation" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
+            <div class="layui-form-item">
+                <label class="layui-form-label">主键ID</label>
+                <div class="layui-input-block">
+                    <input type="id" name="id" placeholder="请输入主键ID" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">代码</label>
+                <div class="layui-input-block">
+                    <input type="sdCode" name="sdCode" placeholder="请输入代码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="sdName" name="sdName" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">父ID</label>
+                <div class="layui-input-block">
+                    <input type="sdPid" name="sdPid" placeholder="请输入父ID" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">层级</label>
+                <div class="layui-input-block">
+                    <input type="sdLevel" name="sdLevel" placeholder="请输入层级" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-block">
+                    <input type="orderr" name="orderr" placeholder="请输入排序" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">创建时间</label>
+                <div class="layui-input-block">
+                    <input type="createTime" name="createTime" placeholder="请输入创建时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">更新时间</label>
+                <div class="layui-input-block">
+                    <input type="updateTime" name="updateTime" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间戳</label>
+                <div class="layui-input-block">
+                    <input type="syncTime" name="syncTime" placeholder="请输入时间戳" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">路径</label>
+                <div class="layui-input-block">
+                    <input type="path" name="path" placeholder="请输入路径" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">路径名称</label>
+                <div class="layui-input-block">
+                    <input type="pathName" name="pathName" placeholder="请输入路径名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否末节点</label>
+                <div class="layui-input-block">
+                    <input type="isEnd" name="isEnd" placeholder="请输入是否末节点" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否系统字典</label>
+                <div class="layui-input-block">
+                    <input type="isSysDic" name="isSysDic" placeholder="请输入是否系统字典" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">值</label>
+                <div class="layui-input-block">
+                    <input type="sdValue" name="sdValue" placeholder="请输入值" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否删除</label>
+                <div class="layui-input-block">
+                    <input type="isDel" name="isDel" placeholder="请输入是否删除" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">类型</label>
+                <div class="layui-input-block">
+                    <input type="type" name="type" placeholder="请输入类型" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否本市外省</label>
+                <div class="layui-input-block">
+                    <input type="sfbsws" name="sfbsws" placeholder="请输入是否本市外省" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否省份</label>
+                <div class="layui-input-block">
+                    <input type="sfProvince" name="sfProvince" placeholder="请输入是否省份" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否城市</label>
+                <div class="layui-input-block">
+                    <input type="sfCity" name="sfCity" placeholder="请输入是否城市" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="bz" name="bz" placeholder="请输入备注" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table_div" style="width: 80%;float: left">
+    <div class="tabModel">
+        <div id="searchParam"  shiro:hasPermission="sysDict:list">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" id="sdName" class="layui-input"  autocomplete="off" placeholder="请输入名称">
+                </div>
+                <div class="layui-input-inline ">
+                    <button class="layui-btn"   id="search">查询</button>
+                </div>
+            </div>
+
+        </div>
+        <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+    </div>
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="sysDict:add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="sysDict:delete">删除</button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sysDict:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sysDict:delete">删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/utils/common.js"></script>
+<script src="/js/utils/ztreeUtilsPQ.js"></script>
+<script src="/jslib/zTree_v3-master/js/jquery.ztree.core.js"></script>
+<script src="/jslib/zTree_v3-master/js/jquery.ztree.all.js"></script>
+<script>
+
+    var layer = layui.layer;
+    var table = layui.table;
+    var form = layui.form;
+    layui.use(['jquery'], function(){
+        var $ = jQuery = layui.$;
+        // 你可以在下面的 js 代码中使用你熟悉的 $, jQuery
+    });
+    // var $ = jQuery= layui.$;
+
+    //渲染table
+    table.render({
+        elem: '#showTable'
+        , page: true //开启分页
+        , url: '/sysDict/listByPage' //数据接口
+        , method: "POST"
+        , contentType: 'application/json;charset=utf8'
+        , headers: {'authorization': CoreUtil.getData("access_token")}
+        , parseData: function (res) { //res 即为原始返回的数据
+            return {
+                "code": res.code, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.data.total, //解析数据长度
+                "data": res.data.records //解析数据列表
+            };
+        }
+        , cols: [
+            [ //表头
+                {type: 'checkbox', fixed: 'left'},
+                {field: 'id', title: '主键ID', width: 300, sort: true},
+                {field: 'sdCode', title: '代码', width: 300, sort: true},
+                {field: 'sdName', title: '名称', width: 300, sort: true},
+                {field: 'sdPid', title: '父ID', width: 300, sort: true},
+                {field: 'sdLevel', title: '层级', width: 300, sort: true},
+                {field: 'orderr', title: '排序', width: 300, sort: true},
+                {field: 'createTime', title: '创建时间', width: 300, sort: true},
+                {field: 'updateTime', title: '更新时间', width: 300, sort: true},
+                {field: 'syncTime', title: '时间戳', width: 300, sort: true},
+                {field: 'path', title: '路径', width: 300, sort: true},
+                {field: 'pathName', title: '路径名称', width: 300, sort: true},
+                {field: 'isEnd', title: '是否末节点', width: 300, sort: true},
+                {field: 'isSysDic', title: '是否系统字典', width: 300, sort: true},
+                {field: 'sdValue', title: '值', width: 300, sort: true},
+                {field: 'isDel', title: '是否删除', width: 300, sort: true},
+                {field: 'type', title: '类型', width: 300, sort: true},
+                {field: 'sfbsws', title: '是否本市外省', width: 300, sort: true},
+                {field: 'sfProvince', title: '是否省份', width: 300, sort: true},
+                {field: 'sfCity', title: '是否城市', width: 300, sort: true},
+                {field: 'bz', title: '备注', width: 300, sort: true},
+                {width: 300, toolbar: "#tool", title: '操作'}
+            ]
+        ]
+        , toolbar: '#toolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        , id: 'tableId' //reload用
+    });
+
+    //刷新table
+    var reloadTable = function () {
+        var sdName = $('#sdName').val();
+        //执行重载
+        table.reload('tableId', {
+            where: {
+                "sdName": sdName
+            }
+        }, 'data');
+    }
+    //搜索
+    $('#search').click(function () {
+        reloadTable();
+    })
+
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event){
+            case 'batchDeleted':
+                var checkStatus = table.checkStatus(obj.config.id);
+                var data = checkStatus.data;
+                if(data.length==0){
+                    layer.msg("请选择要批量删除的列");
+                }else {
+                    var ids = [];
+                    $(data).each(function (index,item) {
+                        ids.push(item.id);
+                    });
+                    tipDialog(ids);
+                }
+                break;
+            case 'add':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("新增");
+                $(".operation input[name=id]").val("");
+                $(".operation input[name=sdCode]").val("");
+                $(".operation input[name=sdName]").val("");
+                $(".operation input[name=sdPid]").val("");
+                $(".operation input[name=sdLevel]").val("");
+                $(".operation input[name=orderr]").val("");
+                $(".operation input[name=createTime]").val("");
+                $(".operation input[name=updateTime]").val("");
+                $(".operation input[name=syncTime]").val("");
+                $(".operation input[name=path]").val("");
+                $(".operation input[name=pathName]").val("");
+                $(".operation input[name=isEnd]").val("");
+                $(".operation input[name=isSysDic]").val("");
+                $(".operation input[name=sdValue]").val("");
+                $(".operation input[name=isDel]").val("");
+                $(".operation input[name=type]").val("");
+                $(".operation input[name=sfbsws]").val("");
+                $(".operation input[name=sfProvince]").val("");
+                $(".operation input[name=sfCity]").val("");
+                $(".operation input[name=bz]").val("");
+                break;
+        };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+        var data = obj.data;
+        switch (obj.event) {
+            case 'del':
+                var ids=[];
+                ids.push(data.id);
+                tipDialog(ids);
+                break;
+            case 'edit':
+                $(".table_div").hide();
+                $(".operation").show();
+                $(".title").html("编辑");
+                $(".operation input[name=id]").val(data.id);
+                $(".operation input[name=sdCode]").val(data.sdCode);
+                $(".operation input[name=sdName]").val(data.sdName);
+                $(".operation input[name=sdPid]").val(data.sdPid);
+                $(".operation input[name=sdLevel]").val(data.sdLevel);
+                $(".operation input[name=orderr]").val(data.orderr);
+                $(".operation input[name=createTime]").val(data.createTime);
+                $(".operation input[name=updateTime]").val(data.updateTime);
+                $(".operation input[name=syncTime]").val(data.syncTime);
+                $(".operation input[name=path]").val(data.path);
+                $(".operation input[name=pathName]").val(data.pathName);
+                $(".operation input[name=isEnd]").val(data.isEnd);
+                $(".operation input[name=isSysDic]").val(data.isSysDic);
+                $(".operation input[name=sdValue]").val(data.sdValue);
+                $(".operation input[name=isDel]").val(data.isDel);
+                $(".operation input[name=type]").val(data.type);
+                $(".operation input[name=sfbsws]").val(data.sfbsws);
+                $(".operation input[name=sfProvince]").val(data.sfProvince);
+                $(".operation input[name=sfCity]").val(data.sfCity);
+                $(".operation input[name=bz]").val(data.bz);
+                break;
+        }
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+        layer.open({
+            content: "确定要删除么?",
+            yes: function(index, layero){
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                CoreUtil.sendAjax("/sysDict/delete",JSON.stringify(ids),function (res) {
+                    layer.msg(res.msg, {time:1000},function () {
+                        reloadTable();
+                    });
+                },"DELETE",false,function (res) {
+                    layer.msg("抱歉！您暂无删除用户的权限");
+                });
+            }
+        });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+        $(".table_div").show();
+        $(".operation").hide();
+        return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+        if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+            CoreUtil.sendAjax("/sysDict/add",JSON.stringify(data.field),function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+                reloadTable();
+
+            },"POST",false,function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }else {
+            CoreUtil.sendAjax("/sysDict/update",JSON.stringify(data.field),function (res) {
+                $(".table_div").show();
+                $(".operation").hide();
+                reloadTable();
+
+            },"PUT",false,function (res) {
+                layer.msg("抱歉！您暂无权限");
+            });
+        }
+
+        return false;
+    });
+    function fnGetSysDicTree(id) {
+        var condition = {}, orderMap = {};
+        condition["sdPid"] = "0";
+        condition["sdLevel"] = "1";
+        //condition["isDel"] = "eq@0";
+        condition["openid"] = id;
+
+        //common.fnShowProgress();
+        //common.fnShowProgress();
+        var req = {
+            condition: condition,
+            ordersMap: orderMap
+        };
+        CoreUtil.sendAjax("/sysDict/getDicListByMap",JSON.stringify(req),function (result) {
+            var objList = result.data;
+            //ztree 设置
+            var settingX = {
+                view: {
+                    dblClickExpand: false,
+                    showIcon: true //是否展示按钮
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                /*回调函数*/
+                callback: {
+                    onClick: onClick,
+                    onExpand: onExpand
+                }
+            };
+
+            var qybzNodes = [];//ztree 树数据
+            var tempqybzMap = {};//ztree 内部树数据
+            var tempStrPath = [];//ztree 临时id变量
+
+            /*遍历循环组装ztree树数据*/
+            for(var i=0;i<objList[0].length;i++){
+                tempqybzMap["id"] = objList[0][i].id;
+                tempqybzMap["name"] = objList[0][i].sdName;
+                tempqybzMap["leve"] = objList[0][i].sdLevel;
+                /*如果是一级父节点*/
+                if(objList[0][i].sdLevel == 1){
+                    tempqybzMap["pId"] = objList[0][i].sdPid;
+                    if(objList[0][i].isEnd == 0){
+                        tempqybzMap["isParent"] = true;
+                    }else{
+                        tempqybzMap["isParent"] = false;
+                    }
+                    qybzNodes.push(tempqybzMap);
+                    tempqybzMap = {};
+                }
+            }
+
+            if(objList[1] != null){
+                for(var i=0;i<objList[1].length;i++){
+                    tempqybzMap["id"] = objList[1][i].id;
+                    tempqybzMap["name"] = objList[1][i].sdName;
+                    tempqybzMap["leve"] = objList[1][i].sdLevel;
+                    tempqybzMap["pId"] = objList[1][i].sdPid;
+                    tempqybzMap["isParent"] = true;//文件夹图标
+                    if(objList[1][i].isEnd!=0){
+                        tempqybzMap["isParent"] = false;
+                    }
+                    qybzNodes.push(tempqybzMap);
+                    tempqybzMap = {};
+                }
+            }
+
+            var pPath = objList[2];
+            if(pPath != null){
+                var strArr = pPath.slice(1,-1).split("#");
+
+                for(var j=0;j<strArr.length-1;j++){
+                    for(var k=0;k<qybzNodes.length;k++){
+                        if(qybzNodes[k]["id"]==strArr[j]){
+                            qybzNodes[k]["open"] = true;
+                        }
+                    }
+                }
+            }
+
+            function onExpand(event, treeId, treeNode) {
+                table.reload('tableId', {
+                    where: {
+                        "sdPid": treeNode.id
+                    }
+                }, 'data');
+                if(treeNode.open){
+                    qybzNodes = [];
+                    var condition = {};
+                    condition["sdPid"] = treeNode.id;
+                    //condition["isDel"] = "eq@0";
+                    var orderMap = {};
+                    var req = {
+                        condition: condition,
+                        ordersMap: orderMap
+                    };
+                    CoreUtil.sendAjax("/sysDict/getDicListByMap",JSON.stringify(req),function (result) {
+                        var objLists =result.data;
+                        for(var i=0;i<objLists[0].length;i++){
+                            tempStrPath = objLists[0][i].path.split("#");
+                            tempqybzMap["pId"] = tempStrPath[tempStrPath.length-3];
+                            tempqybzMap["id"] = objLists[0][i].id;
+                            tempqybzMap["name"] = objLists[0][i].sdName;
+                            tempqybzMap["leve"] = objLists[0][i].sdLevel;
+                            if(objLists[0][i].isEnd == 0){
+                                tempqybzMap["isParent"] = true;
+                            }else{
+                                tempqybzMap["isParent"] = false;
+                            }
+                            qybzNodes.push(tempqybzMap);
+                            tempqybzMap = {};
+                        }
+                        var treeObj = $.fn.zTree.getZTreeObj("sysDicTree");
+                        if(!treeNode.hasOwnProperty("children")){
+                            qybzNodes = treeObj.addNodes(treeNode,0,qybzNodes,false);
+                        }
+                    },"POST",false,function (res) {
+                        layer.msg("抱歉！您暂无删除用户的权限");
+                    });
+                }
+            }
+
+            /*ztree点击事件*/
+            function onClick(event, treeId, treeNode) {
+                $("#parent_id").val(treeNode?treeNode.id:"");
+                $("#parent_name").val(treeNode?treeNode.name:"");
+                gSysDict.fnInitSjzdMngList(treeNode.id);
+            }
+
+            /*初始化ztree模型*/
+            $.fn.zTree.init($("#sysDicTree"), settingX, qybzNodes);
+            /* layer.msg(res.msg, {time:1000},function () {
+                reloadTable();
+             });*/
+        },"POST",false,function (res) {
+            layer.msg("抱歉！您暂无删除用户的权限");
+        });
+    }
+    fnGetSysDicTree(0);
+
+
+</script>

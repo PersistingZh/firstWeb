@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pqkj.mapper.ZjtZjryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pqkj.entity.ZjtZjry">
+        <id column="id" property="id" />
+        <result column="card_type" property="cardType" />
+        <result column="photo_url" property="photoUrl" />
+        <result column="card_number" property="cardNumber" />
+        <result column="phone" property="phone" />
+        <result column="password" property="password" />
+        <result column="address" property="address" />
+        <result column="last_longitude" property="lastLongitude" />
+        <result column="last_latitude" property="lastLatitude" />
+        <result column="last_record_time" property="lastRecordTime" />
+        <result column="is_online" property="isOnline" />
+        <result column="last_online_time" property="lastOnlineTime" />
+        <result column="verification_code" property="verificationCode" />
+        <result column="is_verification" property="isVerification" />
+        <result column="verification_code_time" property="verificationCodeTime" />
+        <result column="verification_time" property="verificationTime" />
+        <result column="user_name" property="userName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_del" property="isDel" />
+        <result column="gldw" property="gldw" />
+        <result column="batch" property="batch" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, card_type, photo_url, card_number, phone, password, address, last_longitude, last_latitude, last_record_time, is_online, last_online_time, verification_code, is_verification, verification_code_time, verification_time,user_name,create_time,update_time,is_del,gldw,batch
+    </sql>
+
+</mapper>
